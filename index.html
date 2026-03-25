@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>XAVEN GROUP</title>
+  <meta name="description" content="XAVEN GROUP — A holding company built to build purposeful ventures across technology, hospitality, and automation." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Geist+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --black:  #080808;
+      --white:  #f0ede8;
+      --g1:     #1a1a1a;
+      --g2:     #2a2a2a;
+      --g3:     #555;
+      --g4:     #888;
+      --g5:     #bbb;
+      --border: rgba(255,255,255,0.07);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{background:var(--black);color:var(--white);font-family:'Cormorant Garamond',Georgia,serif;overflow-x:hidden;cursor:none}
+
+    /* CURSOR */
+    .cursor{position:fixed;width:8px;height:8px;background:var(--white);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s;mix-blend-mode:difference}
+    .cursor-ring{position:fixed;width:32px;height:32px;border:1px solid rgba(240,237,232,.35);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .35s cubic-bezier(.25,.46,.45,.94),height .35s cubic-bezier(.25,.46,.45,.94);mix-blend-mode:difference}
+    body.ch .cursor{width:14px;height:14px}
+    body.ch .cursor-ring{width:52px;height:52px;opacity:.5}
+
+    /* GRAIN */
+    .grain{position:fixed;inset:-50%;width:200%;height:200%;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");pointer-events:none;z-index:500;animation:grain 8s steps(10) infinite}
+    @keyframes grain{0%,100%{transform:translate(0,0)}10%{transform:translate(-2%,-3%)}20%{transform:translate(3%,2%)}30%{transform:translate(-1%,4%)}40%{transform:translate(4%,-1%)}50%{transform:translate(-3%,3%)}60%{transform:translate(2%,-4%)}70%{transform:translate(-4%,1%)}80%{transform:translate(1%,-2%)}90%{transform:translate(-2%,4%)}}
+
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:2rem 4vw}
+    .nav-logo{font-family:'Geist Mono',monospace;font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:var(--white);text-decoration:none;mix-blend-mode:difference}
+    .nav-r{display:flex;align-items:center;gap:2.5rem;mix-blend-mode:difference}
+    .lang-btn{font-family:'Geist Mono',monospace;font-size:.65rem;letter-spacing:.12em;color:var(--g4);background:none;border:none;cursor:none;transition:color .2s;padding:0}
+    .lang-btn.on,.lang-btn:hover{color:var(--white)}
+    .lang-sep{font-family:'Geist Mono',monospace;font-size:.65rem;color:var(--g3)}
+    nav a{font-family:'Geist Mono',monospace;font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--g4);text-decoration:none;transition:color .2s}
+    nav a:hover{color:var(--white)}
+
+    /* HERO */
+    #hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 4vw 7vh;position:relative;overflow:hidden}
+    .hero-ghost{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Cormorant Garamond',serif;font-size:clamp(9rem,20vw,20rem);font-weight:300;letter-spacing:-.04em;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.04);white-space:nowrap;pointer-events:none;user-select:none;animation:fi 2s ease forwards}
+    @keyframes fi{from{opacity:0}to{opacity:1}}
+    .hero-eye{font-family:'Geist Mono',monospace;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--g4);margin-bottom:1.75rem;opacity:0;animation:su 1s ease .3s forwards}
+    h1{font-family:'Cormorant Garamond',serif;font-size:clamp(4rem,10vw,10rem);font-weight:300;line-height:.95;letter-spacing:-.03em;opacity:0;animation:su 1.2s ease .5s forwards}
+    h1 em{font-style:italic;color:var(--g4)}
+    .hero-bot{display:flex;align-items:flex-end;justify-content:space-between;margin-top:4rem;opacity:0;animation:su 1s ease .9s forwards}
+    .hero-desc{font-size:clamp(1rem,1.4vw,1.25rem);font-weight:300;color:var(--g4);max-width:38ch;line-height:1.65;font-style:italic}
+    .hero-scr{font-family:'Geist Mono',monospace;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--g3);display:flex;align-items:center;gap:1rem}
+    .hero-scr::before{content:'';width:40px;height:1px;background:var(--g3);display:block;animation:el 1.5s ease 1.5s both}
+    @keyframes el{from{width:0}to{width:40px}}
+    @keyframes su{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+
+    /* DIVIDER */
+    .div{width:100%;height:1px;background:var(--border)}
+
+    /* SECTION */
+    section{padding:8rem 4vw}
+    .slabel{font-family:'Geist Mono',monospace;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--g3);margin-bottom:3.5rem;display:flex;align-items:center;gap:1.5rem}
+    .slabel::after{content:'';flex:1;max-width:60px;height:1px;background:var(--g3)}
+    h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,5vw,5rem);font-weight:300;letter-spacing:-.02em;line-height:1.05}
+
+    /* ABOUT */
+    #about{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start}
+    .about-l{position:sticky;top:8rem}
+    .about-r{display:flex;flex-direction:column;gap:3rem}
+    .abody{font-size:clamp(1.05rem,1.7vw,1.45rem);font-weight:300;line-height:1.72;color:var(--g5)}
+    .abody strong{font-weight:400;color:var(--white)}
+    .stats{display:grid;grid-template-columns:1fr 1fr;gap:2rem;border-top:1px solid var(--border);padding-top:2.5rem}
+    .snum{font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:300;letter-spacing:-.03em;color:var(--white);line-height:1;display:block}
+    .slb{font-family:'Geist Mono',monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--g3);margin-top:.35rem;display:block}
+
+    /* VENTURES */
+    #ventures{padding:8rem 4vw}
+    .v-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:5rem}
+    .v-note{font-family:'Geist Mono',monospace;font-size:.62rem;letter-spacing:.1em;color:var(--g3);max-width:26ch;line-height:1.65;text-transform:uppercase}
+    .v-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1px;background:var(--border);border:1px solid var(--border)}
+    .vcard{background:var(--black);padding:2.75rem;position:relative;overflow:hidden;transition:background .4s;display:flex;flex-direction:column;min-height:320px}
+    .vcard::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--white),transparent);transform:scaleX(0);transition:transform .6s ease}
+    .vcard:hover{background:var(--g1)}
+    .vcard:hover::after{transform:scaleX(1)}
+    .vidx{font-family:'Geist Mono',monospace;font-size:.62rem;letter-spacing:.15em;color:var(--g3);margin-bottom:2.5rem}
+    .vname{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,3vw,2.8rem);font-weight:300;letter-spacing:-.02em;color:var(--white);line-height:1;margin-bottom:.4rem}
+    .vtag{font-family:'Geist Mono',monospace;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--g3)}
+    .vdesc{font-size:.95rem;font-weight:300;color:var(--g4);line-height:1.68;margin-top:auto;padding-top:2rem;font-style:italic}
+    .vlink{display:inline-flex;align-items:center;gap:.75rem;font-family:'Geist Mono',monospace;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--g3);text-decoration:none;margin-top:1.5rem;transition:color .2s,gap .2s;width:fit-content}
+    .vlink:hover{color:var(--white);gap:1.2rem}
+    .vlink::after{content:'→'}
+    .vcard.soon{background:transparent;align-items:center;justify-content:center}
+    .soon-plus{font-family:'Cormorant Garamond',serif;font-size:2.5rem;font-weight:300;color:var(--g2);display:block;margin-bottom:.75rem;transition:color .3s}
+    .vcard.soon:hover .soon-plus{color:var(--g3)}
+    .soon-lbl{font-family:'Geist Mono',monospace;font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--g3)}
+
+    /* CONTACT */
+    #contact{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start;border-top:1px solid var(--border)}
+    .contact-l{position:sticky;top:8rem}
+    .cbody{font-size:clamp(.95rem,1.4vw,1.2rem);font-weight:300;color:var(--g4);line-height:1.75;font-style:italic;margin-top:1.75rem;max-width:38ch}
+    .contact-r{display:flex;flex-direction:column}
+    .ci{display:flex;align-items:center;justify-content:space-between;padding:1.75rem 0;border-bottom:1px solid var(--border);text-decoration:none;color:inherit;transition:padding-left .3s}
+    .ci:hover{padding-left:1rem}
+    .ci-label{font-family:'Geist Mono',monospace;font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:var(--g3)}
+    .ci-val{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:300;color:var(--g5);transition:color .2s}
+    .ci:hover .ci-val{color:var(--white)}
+    .ci-arr{font-size:.85rem;color:var(--g3);transition:transform .2s,color .2s}
+    .ci:hover .ci-arr{transform:translateX(4px);color:var(--white)}
+
+    /* PRIVACY */
+    #privacy{max-width:720px;margin:0 auto;padding:8rem 4vw;border-top:1px solid var(--border)}
+    .ps h3{font-family:'Geist Mono',monospace;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--g4);margin:2.5rem 0 .6rem}
+    .ps p,.ps ul{font-size:.95rem;font-weight:300;color:var(--g4);line-height:1.8}
+    .ps ul{padding-left:1.4rem}
+    .ps li{margin-bottom:.35rem}
+
+    /* FOOTER */
+    footer{padding:2.5rem 4vw;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border);flex-wrap:wrap;gap:1rem}
+    .fbrand{font-family:'Geist Mono',monospace;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--g3)}
+    .fcopy{font-family:'Geist Mono',monospace;font-size:.6rem;letter-spacing:.07em;color:var(--g3)}
+    .flinks{display:flex;gap:2rem;list-style:none}
+    .flinks a{font-family:'Geist Mono',monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--g3);text-decoration:none;transition:color .2s}
+    .flinks a:hover{color:var(--white)}
+
+    /* REVEAL */
+    .rev{opacity:0;transform:translateY(22px);transition:opacity .8s cubic-bezier(.25,.46,.45,.94),transform .8s cubic-bezier(.25,.46,.45,.94)}
+    .rev.on{opacity:1;transform:none}
+
+    /* LANG */
+    [data-es],[data-en]{display:none}
+    .es [data-es]{display:revert}
+    .en [data-en]{display:revert}
+
+    /* RESPONSIVE */
+    @media(max-width:900px){
+      #about,#contact{grid-template-columns:1fr;gap:3rem}
+      .about-l,.contact-l{position:static}
+      .v-head{flex-direction:column;align-items:flex-start;gap:1rem}
+      .hero-bot{flex-direction:column;align-items:flex-start;gap:2rem}
+    }
+    @media(max-width:600px){
+      .stats{grid-template-columns:1fr}
+      footer{flex-direction:column;align-items:flex-start}
+      body{cursor:auto}
+      .cursor,.cursor-ring{display:none}
+    }
+  </style>
+</head>
+<body class="es">
+
+<div class="cursor" id="cur"></div>
+<div class="cursor-ring" id="ring"></div>
+<div class="grain"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">XAVEN GROUP</a>
+  <div class="nav-r">
+    <div style="display:flex;align-items:center;gap:.5rem">
+      <button class="lang-btn on" id="bEs" onclick="setL('es')">ES</button>
+      <span class="lang-sep">/</span>
+      <button class="lang-btn" id="bEn" onclick="setL('en')">EN</button>
+    </div>
+    <a href="#about"><span data-es>Nosotros</span><span data-en>About</span></a>
+    <a href="#ventures">Ventures</a>
+    <a href="#contact"><span data-es>Contacto</span><span data-en>Contact</span></a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-ghost">XAVEN</div>
+  <div style="position:relative;z-index:1">
+    <p class="hero-eye">XAVEN GROUP — EST. 2025</p>
+    <h1>Built<br><em>to build.</em></h1>
+    <div class="hero-bot">
+      <p class="hero-desc">
+        <span data-es>Un holding construido para crear empresas que importan — en tecnología, hospitalidad y automatización.</span>
+        <span data-en>A holding company built to create ventures that matter — across technology, hospitality, and automation.</span>
+      </p>
+      <div class="hero-scr">
+        <span data-es>Desplazar</span>
+        <span data-en>Scroll</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-l rev">
+    <div class="slabel"><span data-es>Nosotros</span><span data-en>About</span></div>
+    <h2>
+      <span data-es>Una sola visión.<br><em>Múltiples frentes.</em></span>
+      <span data-en>One vision.<br><em>Many fronts.</em></span>
+    </h2>
+  </div>
+  <div class="about-r">
+    <p class="abody rev">
+      <span data-es>XAVEN GROUP es una <strong>empresa holding</strong> fundada con la convicción de que los mejores negocios nacen de identificar problemas reales y construir soluciones que duren.</span>
+      <span data-en>XAVEN GROUP is a <strong>holding company</strong> founded on the conviction that the best businesses are born from identifying real problems and building solutions that last.</span>
+    </p>
+    <p class="abody rev">
+      <span data-es>Operamos como plataforma para <strong>marcas y productos</strong> en distintos sectores. Cada venture comparte una filosofía común: excelencia en ejecución, tecnología como ventaja, y un enfoque obsesivo en el cliente.</span>
+      <span data-en>We operate as a platform for <strong>brands and products</strong> across industries. Each venture shares a common philosophy: execution excellence, technology as an edge, and an obsessive client focus.</span>
+    </p>
+    <div class="stats rev">
+      <div><span class="snum">2025</span><span class="slb"><span data-es>Fundación</span><span data-en>Founded</span></span></div>
+      <div><span class="snum">3+</span><span class="slb"><span data-es>Ventures</span><span data-en>Ventures</span></span></div>
+      <div><span class="snum">MX</span><span class="slb"><span data-es>Operaciones</span><span data-en>Operations</span></span></div>
+      <div><span class="snum">LLC</span><span class="slb"><span data-es>Estructura US</span><span data-en>US Structure</span></span></div>
+    </div>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- VENTURES -->
+<section id="ventures">
+  <div class="v-head rev">
+    <div>
+      <div class="slabel">Ventures</div>
+      <h2><span data-es>Nuestras<br><em>marcas.</em></span><span data-en>Our<br><em>brands.</em></span></h2>
+    </div>
+    <p class="v-note">
+      <span data-es>Cada marca opera de forma independiente bajo el paraguas de XAVEN GROUP.</span>
+      <span data-en>Each brand operates independently under the XAVEN GROUP umbrella.</span>
+    </p>
+  </div>
+
+  <div class="v-grid">
+    <!-- CUADRIA -->
+    <div class="vcard rev">
+      <div class="vidx">01</div>
+      <div class="vname">CUADRiA</div>
+      <div class="vtag"><span data-es>Automatización · Sector Contable</span><span data-en>Automation · Accounting Sector</span></div>
+      <p class="vdesc">
+        <span data-es>Copiloto contable impulsado por IA. Automatizamos los procesos repetitivos de los despachos contables — desde la recepción de documentos hasta la entrega de resultados.</span>
+        <span data-en>AI-powered accounting copilot. We automate the repetitive workflows of accounting firms — from document intake to final delivery.</span>
+      </p>
+      <a href="https://cuadria.mx" target="_blank" class="vlink"><span data-es>Visitar</span><span data-en>Visit</span></a>
+    </div>
+
+    <!-- PLACEHOLDER 1 -->
+    <div class="vcard soon rev">
+      <div style="text-align:center">
+        <span class="soon-plus">+</span>
+        <span class="soon-lbl"><span data-es>Próximamente</span><span data-en>Coming soon</span></span>
+      </div>
+    </div>
+
+    <!-- PLACEHOLDER 2 -->
+    <div class="vcard soon rev">
+      <div style="text-align:center">
+        <span class="soon-plus">+</span>
+        <span class="soon-lbl"><span data-es>Próximamente</span><span data-en>Coming soon</span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-l rev">
+    <div class="slabel"><span data-es>Contacto</span><span data-en>Contact</span></div>
+    <h2><span data-es>Hablemos<br><em>de negocios.</em></span><span data-en>Let's talk<br><em>business.</em></span></h2>
+    <p class="cbody">
+      <span data-es>Alianzas, inversión, colaboraciones o simplemente una conversación — estamos abiertos.</span>
+      <span data-en>Partnerships, investment, collaborations, or just a conversation — we're open.</span>
+    </p>
+  </div>
+  <div class="contact-r rev">
+    <a class="ci" href="mailto:xavengroup@gmail.com">
+      <span class="ci-label">Email</span>
+      <span class="ci-val">xavengroup@gmail.com</span>
+      <span class="ci-arr">→</span>
+    </a>
+    <a class="ci" href="#ventures">
+      <span class="ci-label">Ventures</span>
+      <span class="ci-val"><span data-es>Ver marcas</span><span data-en>View brands</span></span>
+      <span class="ci-arr">→</span>
+    </a>
+    <div class="ci" style="cursor:default">
+      <span class="ci-label"><span data-es>Ubicación</span><span data-en>Location</span></span>
+      <span class="ci-val">México · US</span>
+      <span class="ci-arr" style="opacity:0">→</span>
+    </div>
+  </div>
+</section>
+
+<!-- PRIVACY -->
+<section id="privacy">
+  <div class="slabel"><span data-es>Legal</span><span data-en>Legal</span></div>
+  <h2 data-es style="margin-bottom:3rem">Aviso de Privacidad</h2>
+  <h2 data-en style="margin-bottom:3rem">Privacy Policy</h2>
+
+  <div class="ps" data-es>
+    <h3>1. Responsable</h3>
+    <p>XAVEN GROUP LLC es responsable del tratamiento de sus datos personales. Contacto: xavengroup@gmail.com</p>
+    <h3>2. Datos que recabamos</h3>
+    <ul><li>Nombre y datos de contacto (email, teléfono)</li><li>Información de empresa o proyecto</li><li>Datos técnicos de navegación</li></ul>
+    <h3>3. Finalidad</h3>
+    <ul><li>Atender solicitudes de contacto, alianzas o colaboración</li><li>Gestionar relaciones comerciales con clientes y socios</li><li>Comunicación sobre productos y ventures de XAVEN GROUP</li></ul>
+    <h3>4. WhatsApp Business</h3>
+    <p>XAVEN GROUP puede comunicarse vía WhatsApp Business para atención y seguimiento. Puede solicitar cancelación respondiendo STOP o escribiendo a xavengroup@gmail.com.</p>
+    <h3>5. Transferencia de datos</h3>
+    <p>No vendemos ni compartimos sus datos con terceros, salvo proveedores bajo acuerdo de confidencialidad o requerimiento legal.</p>
+    <h3>6. Derechos ARCO</h3>
+    <p>Puede ejercer sus derechos de Acceso, Rectificación, Cancelación y Oposición escribiendo a xavengroup@gmail.com. Respondemos en 20 días hábiles.</p>
+    <h3>7. Última actualización</h3>
+    <p>24 de marzo de 2026.</p>
+  </div>
+
+  <div class="ps" data-en>
+    <h3>1. Data Controller</h3>
+    <p>XAVEN GROUP LLC is responsible for processing your personal data. Contact: xavengroup@gmail.com</p>
+    <h3>2. Data We Collect</h3>
+    <ul><li>Name and contact details (email, phone)</li><li>Company or project information</li><li>Technical browsing data</li></ul>
+    <h3>3. Purposes</h3>
+    <ul><li>Responding to contact, partnership or collaboration requests</li><li>Managing commercial relationships</li><li>Communication about XAVEN GROUP products and ventures</li></ul>
+    <h3>4. WhatsApp Business</h3>
+    <p>XAVEN GROUP may communicate via WhatsApp Business for support and project follow-up. Opt out by replying STOP or writing to xavengroup@gmail.com.</p>
+    <h3>5. Data Sharing</h3>
+    <p>We do not sell or share your data with third parties, except service providers under confidentiality agreements or as required by law.</p>
+    <h3>6. Your Rights</h3>
+    <p>You may request access, correction, deletion or objection by writing to xavengroup@gmail.com. We respond within 30 calendar days.</p>
+    <h3>7. Last Updated</h3>
+    <p>March 24, 2026.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="fbrand">XAVEN GROUP</span>
+  <span class="fcopy">© 2026 XAVEN GROUP LLC. All rights reserved.</span>
+  <ul class="flinks">
+    <li><a href="#about"><span data-es>Nosotros</span><span data-en>About</span></a></li>
+    <li><a href="#ventures">Ventures</a></li>
+    <li><a href="#privacy"><span data-es>Privacidad</span><span data-en>Privacy</span></a></li>
+  </ul>
+</footer>
+
+<script>
+  // CURSOR
+  const cur = document.getElementById('cur');
+  const rng = document.getElementById('ring');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove', e => {
+    mx=e.clientX; my=e.clientY;
+    cur.style.left=mx+'px'; cur.style.top=my+'px';
+  });
+  (function anim(){
+    rx+=(mx-rx)*.12; ry+=(my-ry)*.12;
+    rng.style.left=rx+'px'; rng.style.top=ry+'px';
+    requestAnimationFrame(anim);
+  })();
+  document.querySelectorAll('a,button,.vcard,.ci').forEach(el=>{
+    el.addEventListener('mouseenter',()=>document.body.classList.add('ch'));
+    el.addEventListener('mouseleave',()=>document.body.classList.remove('ch'));
+  });
+
+  // LANG
+  function setL(l){
+    document.body.className=document.body.className.replace(/\b(es|en)\b/,'').trim()+' '+l;
+    document.getElementById('bEs').classList.toggle('on',l==='es');
+    document.getElementById('bEn').classList.toggle('on',l==='en');
+    document.documentElement.lang=l;
+  }
+
+  // REVEAL
+  const obs=new IntersectionObserver((entries)=>{
+    entries.forEach((e,i)=>{
+      if(e.isIntersecting){
+        setTimeout(()=>e.target.classList.add('on'),i*90);
+        obs.unobserve(e.target);
+      }
+    });
+  },{threshold:.07});
+  document.querySelectorAll('.rev').forEach(el=>obs.observe(el));
+
+  // SMOOTH SCROLL
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click',e=>{
+      e.preventDefault();
+      const t=document.querySelector(a.getAttribute('href'));
+      if(t) t.scrollIntoView({behavior:'smooth'});
+    });
+  });
+</script>
+</body>
+</html>
